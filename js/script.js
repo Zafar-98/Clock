@@ -16,7 +16,7 @@ let h = document.querySelector(".h")
 //         y = setTimeout(() => {
 //             recursion()
 //         }, 200);
-        
+
 //         if (x == 5) {
 //             clearInterval(y)
 //         }
@@ -29,28 +29,28 @@ let h = document.querySelector(".h")
 // recursion()
 
 function clock() {
-    
+
     let time = new Date()
     let hour = time.getHours()
     let min = time.getMinutes()
     let sec = time.getSeconds()
-    
-    hours.innerHTML = hour <= 9 ? '0'+hour : hour
-    minutes.innerHTML = min <= 9 ? '0'+min : min
+
+    hours.innerHTML = hour <= 9 ? '0' + hour : hour
+    minutes.innerHTML = min <= 9 ? '0' + min : min
     // if (sec <= 9) {
     //     minutes.innerHTML = '0'+sec
     // } else {
     //     minutes.innerHTML = sec
     // }
-    
+
     h.style.transform = `rotate(${hour * 30}deg)`
     m.style.transform = `rotate(${min * 6}deg)`
     s.style.transform = `rotate(${sec * 6}deg)`
-    
+
     setTimeout(() => {
         clock()
     }, 1000);
-    
+
 }
 
 clock()
@@ -76,122 +76,59 @@ for (let i = 0; i < tabsItem.length; i++) {
         tabsContentItem[i].classList.add("active")
     })
 }
-let stopwatch__clock = document.querySelector(".stopwatch__clock")
-let stopwatch__btn = document.querySelector(".stopwatch__btn")
-let stopwatch__hours = document.querySelector(".stopwatch__hours")
-let stopwatch__minutes = document.querySelector(".stopwatch__minutes")
-let stopwatch__seconds = document.querySelector(".stopwatch__seconds")
 
 
-stopwatch__btn.addEventListener ("click", () => {
-    if(stopwatch__btn.innerHTML ="stop"){
-        (stopwatch__btn == "start") }
-        else{
-            (stopwatch__btn.innerHTML = "stop")
-            
-        }
+// Timer
 
+let stopwatchHours = document.querySelector(".stopwatch__hours")
+let stopwatchMinutes = document.querySelector(".stopwatch__minutes")
+let stopwatchSeconds = document.querySelector(".stopwatch__seconds")
+let stopwatchBtn = document.querySelector(".stopwatch__btn")
+let tabsLinkSpan = document.querySelector(".tabsLink__span")
 
+let stop;
 
-function stopwatch(){
-    stopwatch__seconds++;
-    if (stopwatch__seconds>= 60) {
-        stopwatch__seconds = 0;
-        stopwatch__minutes++;
-     if (stopwatch__minutes >= 60) {
-            stopwatch__minutes = 0;
-            stopwatch__hours++;
+stopwatchBtn.addEventListener("click", function () {
+
+    if (this.innerHTML == "start") {
+        this.innerHTML = "stop"
+        tabsLinkSpan.classList.add("active")
+        stopWatch()
+    } else if (this.innerHTML == "stop") {
+        this.innerHTML = "clear"
+        tabsLinkSpan.classList.remove("active")
+        tabsLinkSpan.classList.add("active_clear")
+        clearInterval(stop)
+    } else if (this.innerHTML == "clear") {
+        this.innerHTML = "start"
+        tabsLinkSpan.classList.remove("active_clear")
+        stopwatchSeconds.innerHTML = 0
+        stopwatchMinutes.innerHTML = 0
+        stopwatchHours.innerHTML = 0
+    }
+
+})
+
+function stopWatch() {
+
+    stopwatchSeconds.innerHTML++
+
+    if (stopwatchSeconds.innerHTML > 59) {
+        stopwatchSeconds.innerHTML = 0
+        stopwatchMinutes.innerHTML++
+
+        if (stopwatchMinutes.innerHTML > 5) {
+            stopwatchMinutes.innerHTML = 0
+            stopwatchHours.innerHTML++
         }
     }
+
+    stop = setTimeout(() => {
+        stopWatch()
+    }, 10);
+
 }
-function stopwatch(){
-    let startTime = new Date()
-    let stopwatchHour = startTime.getHours()
-    let stopwatchMin = startTime.getMinutes()
-    let stopwatchSec = startTime.getSeconds()
-  
-    
-    stopwatch__hours.innerHTML = stopwatchHour <= 9 ? '0'+stopwatchHour : stopwatchHour
-    stopwatch__minutes.innerHTML = stopwatchMin <= 9 ? '0'+stopwatchMin: stopwatchMin
-    stopwatch__seconds.innerHTML = stopwatchSec <= 9 ? '0'+stopwatchSec : stopwatchSec
 
-    
-}
-setTimeout(() => {
-    stopwatch()
-}, 200);
+// stopWatch()
 
-
-}) 
-stopwatch()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*function tick(){
-    stopwatch__seconds++;
-    if (stopwatch__seconds>= 60) {
-        stopwatch__seconds = 0;
-        stopwatch__minutes++;
-        if (stopwatch__minutes >= 60) {
-            stopwatch__minutes = 0;
-            stopwatch__hours++;
-        }
-    }
-}
-function add() {
-    tick();
-    stopwatch__hours.innerHTML = hours <= 9 ? '0'+hours : hours
-    stopwatch__minutes.innerHTML = min <= 9 ? '0'+min : min
-    stopwatch__seconds.innerHTML = sec <= 9 ? "0"+sec : sec
-    timer();
-    
-}
-function timer() {
-    t = setTimeout(add, 200);
-}
-tick()*/
+// Timer
